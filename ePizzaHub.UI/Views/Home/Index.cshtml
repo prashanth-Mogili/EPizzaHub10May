@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "_FullSizeLayout";
+}
+
+<div style="background:skyblue">
+   <div class="container">
+       <div class="row">
+           <div class="col-sm-8 pt-4 pb-2">
+                <h1>Welcome to ePizzaHub</h1>
+                <p class="pb-4 pt-5">Yummy pizza delivered fast at your door step!</p>
+                <a href="/" class="btn btn-primary">Order Online Now</a>
+           </div>
+           <div class="col-sm-4 pt-4 pb-2">
+                <img src="~/images/pizza-header.png" class="img-fluid" />
+           </div>
+       </div>
+   </div>
+</div>
+
+<div class="container mt-5">
+    <h2>Pizza, Desert and Beverages</h2>
+    <div class="row">
+       @foreach(var item in Model)
+        {
+            <div class="col-sm-4 mb-3">
+                <div class="card">
+                    <img src="@item.ImageUrl" class="card-img-top"/>
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Name <span class="float-end">₹@item.UnitPrice.ToString("##.#")</span> </h5>
+                        <p class="card-text">@item.Description</p>
+                        <button onclick="AddToCart('@item.Id','@item.Name','@item.UnitPrice',1)" class="btn btn-primary">Add To Cart</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+                    @section Scripts{
+    <script src="~/js/cart.js" asp-append-version="true"></script>
+                    }
