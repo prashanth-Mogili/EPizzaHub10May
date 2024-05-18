@@ -1,6 +1,7 @@
 ﻿using ePizzaHub.Core.Entities;
 using ePizzaHub.Models;
 using ePizzaHub.Services.Interfaces;
+using ePizzaHub.UI.Helpers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ePizzaHub.UI.Controllers
@@ -48,12 +49,14 @@ namespace ePizzaHub.UI.Controllers
             return Json(new { status = "failed", count = 0 });
         }
 
+        [Route("Cart/updateQuantity/{ItemId}/{Quantity}")]
         public IActionResult UpdateQuantity(int ItemId, int Quantity)
         {
             int result = _cartService.UpdateQuantity(CartId, ItemId, Quantity);
             return Json(result);
         }
 
+        [Route("Cart/DeleteItem/{ItemId}")]
         public IActionResult DeleteItem(int ItemId)
         {
             int result = _cartService.DeleteItem(CartId, ItemId);
@@ -68,6 +71,28 @@ namespace ePizzaHub.UI.Controllers
                 return Json(count);
             }
             return Json(0);
+        }
+
+        public IActionResult CheckOut()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CheckOut(AddressModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                CartModel cartModel = _cartService.GetCartDetails(CartId);
+                if(CurrentUser!=null && cartModel != null) { 
+                    cartModel.UserId = CurrentUser.Id;
+                    _cartService.UpdateCart(cartModel.Id, CurrentUser.Id);
+                }
+                TempData.Set("Address", model);
+                TempData.Set("Cart", model);
+                return RedirectToAction("Index","Payment");
+            }
+            return View();
         }
     }
 }

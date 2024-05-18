@@ -105,7 +105,7 @@ namespace ePizzaHub.Services.Implementations
                     subTotal += item.Total;
                 }
                 model.Total = subTotal;
-                model.Tax = (subTotal * Convert.ToDecimal(_config["Tax"])) / 100;
+                model.Tax = (subTotal * Convert.ToDecimal(_config["Tax:GST"])) / 100;
                 model.GrandTotal = model.Total + model.Tax;
 
             }

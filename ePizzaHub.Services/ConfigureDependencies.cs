@@ -28,6 +28,7 @@ namespace ePizzaHub.Services
             //Register repositories
             services.AddScoped<IRepository<Item>, Repository<Item>>();
             services.AddScoped<IRepository<CartItem>, Repository<CartItem>>();
+            services.AddScoped<IRepository<PaymentDetail>, Repository<PaymentDetail>>();
 
             services.AddScoped<IUserRepository, UserRepository>();           
 
@@ -38,6 +39,7 @@ namespace ePizzaHub.Services
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ICartService, CartService>();
             services.AddScoped<IItemService, ItemService>();
+            services.AddScoped<IPaymentService, PaymentService>();
              
 
         }

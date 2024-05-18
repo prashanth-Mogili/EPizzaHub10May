@@ -14,7 +14,7 @@
 }
 
 
-function deleteItem(id) {
+function DeleteItem(id) {
     if (id > 0) {
         $.ajax({
             type: "GET",
@@ -42,3 +42,16 @@ function updateQuantity(id, currentQuantity, quantity) {
     }
 }
 
+
+$(document).ready(function () {
+    $.ajax({
+        type: 'GET',
+        contentType: 'application/json; charset=utf-8',
+        url: '/Cart/GetCartCount',
+        success: function (response) {
+            if (response > 0) {
+                $('#cartCounter').text(response);
+            }
+        }
+    });
+});
