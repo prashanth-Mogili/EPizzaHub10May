@@ -89,7 +89,7 @@ namespace ePizzaHub.UI.Controllers
                     _cartService.UpdateCart(cartModel.Id, CurrentUser.Id);
                 }
                 TempData.Set("Address", model);
-                TempData.Set("Cart", model);
+                TempData.Set("Cart", cartModel);
                 return RedirectToAction("Index","Payment");
             }
             return View();
