@@ -56,10 +56,63 @@
                         </li>
                     </ul>
 
-                    <a  class="btn btn-primary" asp-route-returnUrl="/Cart/Index">Pay Now</a>
-                    
+                    @if (@CurrentUser != null)
+                    {
+                        <form method="post" id="PaymentForm" action="/Payment/Status">
+                            <input type="hidden" name="Receipt" id="Receipt" value="@Model.Receipt" />
+                            <input type="hidden" name="Currency" id="Currency" value="@Model.Currency" />
+                          
+
+                            <input type="hidden" name="rzp_paymentid" id="rzp_paymentid" />
+                            <input type="hidden" name="rzp_orderid" id="rzp_orderid" />
+                            <input type="hidden" name="rzp_signature" id="rzp_signature" />                            
+                         </form>
+                        <button class="btn btn-primary" href="" id="rzp-button">Pay Now</button>
+                        
+                    }                                      
                 </div>
             </div>
         </div>
     </div>
 }
+
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    var options = {
+        "key": "@Model.RazorpayKey", // Enter the Key ID generated from the Dashboard
+        "amount": "@(Model.GrandTotal * 100)", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        "currency": "@Model.Currency",
+        "name": "@Model.Name", //your business name
+        "description": "@Model.Description",
+        "image": "/images/logo.png",
+        "order_id": "@Model.OrderId", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        //"callback_url": "https://eneqd3r9zrjok.x.pipedream.net/",
+        "handler" : function (response){
+            $('#rzp_paymentid').val(response.razorpay_payment_id);
+            $('#rzp_orderid').val(response.razorpay_order_id);
+            $('#rzp_signature').val(response.razorpay_signature);
+            $('#PaymentForm').submit();
+
+        },
+        "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information especially their phone number
+            "name": "@CurrentUser.Name", //your customer's name
+            "email": "@CurrentUser.Email",
+            "contact": "@CurrentUser.PhoneNumber" //Provide the customer's phone number for better conversion rates
+        },
+        "notes": {
+            "address": "azorpay Corporate Office"
+        },
+        "theme": {
+            "color": "#3399cc"
+        }
+    };
+    var rzp = new Razorpay(options);
+    window.onload = function () {
+        document.getElementById('rzp-button').click();
+    }
+    document.getElementById('rzp-button').onclick = function (e) {
+        rzp.open();
+        e.preventDefault();
+    }
+</script>

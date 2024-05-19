@@ -5,7 +5,7 @@ namespace ePizzaHub.Services.Implementations
 {
     public class Service<TEntity> : IService<TEntity> where TEntity : class
     {
-        IRepository<TEntity> _repo;
+        protected IRepository<TEntity> _repo;
         public Service(IRepository<TEntity> repository)
         {
             _repo = repository;

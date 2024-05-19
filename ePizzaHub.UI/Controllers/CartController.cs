@@ -18,15 +18,15 @@ namespace ePizzaHub.UI.Controllers
         {
             get
             {
-                if (HttpContext.Request.Cookies["CId"] == null)
+                if (HttpContext.Request.Cookies["CID"] == null)
                 {
                     Guid cartId = Guid.NewGuid();
-                    HttpContext.Response.Cookies.Append("CId", cartId.ToString());
+                    HttpContext.Response.Cookies.Append("CID", cartId.ToString());
                     return cartId;
                 }
                 else
                 {
-                    return Guid.Parse(HttpContext.Request.Cookies["CId"]);
+                    return Guid.Parse(HttpContext.Request.Cookies["CID"]);
                 }
             }
         }

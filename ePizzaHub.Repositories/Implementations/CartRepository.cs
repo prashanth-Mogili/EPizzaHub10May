@@ -50,8 +50,9 @@ namespace ePizzaHub.Repositories.Implementations
                                       where cartItem.CartId == CartId
                                       select new ItemModel
                                       {
-                                          Id = item.Id,
+                                          Id = cartItem.Id,
                                           Name = item.Name,
+                                          ItemId = item.Id,
                                           UnitPrice = item.UnitPrice,
                                           Quantity = cartItem.Quantity,
                                           Total = item.UnitPrice * cartItem.Quantity,

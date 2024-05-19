@@ -33,6 +33,7 @@ namespace ePizzaHub.Services
             services.AddScoped<IUserRepository, UserRepository>();           
 
             services.AddScoped<ICartRepository, CartRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
 
             //Register Services
 
@@ -40,6 +41,7 @@ namespace ePizzaHub.Services
             services.AddScoped<ICartService, CartService>();
             services.AddScoped<IItemService, ItemService>();
             services.AddScoped<IPaymentService, PaymentService>();
+            services.AddScoped<IOrderService, OrderService>();
              
 
         }
